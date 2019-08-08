@@ -9,50 +9,105 @@ void main() => runApp(Demo());
 class Demo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates = [
+      const DemoLocalizationsDelegate(),
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ];
+    Iterable<Locale> supportedLocales = [
+      const Locale('en'), // English
+      const Locale('zh'), // generic Chinese 'zh'
+    ];
     return MaterialApp(
       onGenerateTitle: (BuildContext context) => DemoLocalizations.of(context).title,
-      localizationsDelegates: [
-        const DemoLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en'), // English
-        const Locale('zh'), // generic Chinese 'zh'
-        const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'), // generic simplified Chinese 'zh_Hans'
-        const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'), // generic traditional Chinese 'zh_Hant'
-        const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans', countryCode: 'CN'), // 'zh_Hans_CN'
-        const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'), // 'zh_Hant_TW'
-        const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'HK'), // 'zh_Hant_HK'
-      ],
+      localizationsDelegates: localizationsDelegates,
+      supportedLocales: supportedLocales,
       // Watch out: MaterialApp creates a Localizations widget
       // with the specified delegates. DemoLocalizations.of()
       // will only find the app's Localizations widget if its
       // context is a child of the app.
-      home: DemoApp(),
+      home: DemoApp(supportedLocales),
     );
   }
 }
 
-class DemoApp extends StatelessWidget {
+class DemoApp extends StatefulWidget {
+  final Iterable<Locale> supportedLocales;
+  const DemoApp(this.supportedLocales);
+
+  @override
+  DemoState createState() => DemoState(this.supportedLocales);
+}
+
+class DemoState extends State<DemoApp> {
+  final Iterable<Locale> supportedLocales;
+  DemoState(this.supportedLocales);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(DemoLocalizations.of(context).title),
+        actions: <Widget>[
+          IconButton(icon: const Icon(Icons.language), onPressed: _changeLanguage),
+        ],
       ),
       body: Center(
         child: Text(DemoLocalizations.of(context).content),
       ),
     );
   }
+
+  void _changeLanguage() {
+    Navigator.of(context).push(
+      new MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = supportedLocales.map((Locale locale) {
+              String localeName = DemoLocalizations.getLocaleName(locale);
+              return ListTile(
+                title: Text(
+                    localeName
+                ),
+                onTap: () {
+                  setState(() {
+                    Intl.defaultLocale = localeName;
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            },
+          );
+          final List<Widget> divided = ListTile
+              .divideTiles(
+            context: context,
+            tiles: tiles,
+          )
+              .toList();
+
+          return new Scaffold(
+            appBar: AppBar(
+              title: const Text('Languages'),
+            ),
+            body: ListView(children: divided),
+          );
+        },
+      ),
+    );
+  }
 }
 
 class DemoLocalizations {
+  static String getLocaleName(Locale locale) {
+    if (locale == null) {
+      return "";
+    }
+    final String name = (locale.countryCode == null || locale.countryCode.isEmpty) ? locale.languageCode : locale.toString();
+    return Intl.canonicalizedLocale(name);
+  }
+  
   static Future<DemoLocalizations> load(Locale locale) {
-    final String name = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
-    final String localeName = Intl.canonicalizedLocale(name);
+    final String localeName = getLocaleName(locale);
 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
