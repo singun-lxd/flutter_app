@@ -8,17 +8,17 @@ class PluginApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Battery plugin sample',
-      home: PluginWidget(),
+      home: _MyHomePage(),
     );
   }
 }
 
-class PluginWidget extends StatefulWidget {
+class _MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<PluginWidget> {
+class _MyHomePageState extends State<_MyHomePage> {
   static const platform = const MethodChannel('samples.flutter.dev/battery');
 
   // Get battery level.
