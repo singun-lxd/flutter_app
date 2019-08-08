@@ -68,7 +68,6 @@ class DemoLocalizations {
     return Intl.message(
       'Hello World',
       name: 'title',
-      desc: 'Title for the Demo application',
     );
   }
 
@@ -76,7 +75,6 @@ class DemoLocalizations {
     return Intl.message(
       'Content',
       name: 'content',
-      desc: 'Content for the Demo application',
     );
   }
 }
