@@ -23,7 +23,7 @@ class LocaleApp extends StatelessWidget {
         const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'), // 'zh_Hant_TW'
         const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'HK'), // 'zh_Hant_HK'
       ],
-      title: 'fuck',
+      title: 'locale test',
       home: Localizations(),
     );
   }
@@ -39,16 +39,21 @@ class LocalizationsState extends State<Localizations> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(MaterialLocalizations.of(context).dialogLabel),
-            Text(MaterialLocalizations.of(context).popupMenuLabel),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(MaterialLocalizations.of(context).licensesPageTitle),
       ),
+      body: Material(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(MaterialLocalizations.of(context).dialogLabel),
+              Text(MaterialLocalizations.of(context).popupMenuLabel),
+            ],
+          ),
+        )
+      )
     );
   }
 }
