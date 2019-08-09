@@ -1,14 +1,14 @@
 {
-  "@@locale": "en",
+  "@@locale": "zh",
   "@@last_modified": "2019-08-09T10:28:37.633038",
   "title": "欢迎使用",
   "@title": {
     "type": "text",
     "placeholders": {}
   },
-  "content": "Content",
+  "content": "内容",
   "@content": {
-    "type": "内容",
+    "type": "text",
     "placeholders": {}
   },
   "wordListPage": "单词列表",

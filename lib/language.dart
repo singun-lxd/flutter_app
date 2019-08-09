@@ -3,6 +3,7 @@ library singun.language;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'l10n/messages_all.dart';
 
@@ -27,11 +28,14 @@ String getLocaleName(Locale locale) {
 
 class MyLocalizations {
   static Future<MyLocalizations> load(Locale locale) {
-    final String localeName = getLocaleName(locale);
-
-    return initializeMessages(localeName).then((_) {
-      Intl.defaultLocale = localeName;
-      return MyLocalizations();
+    return loadLanguage().then((localeName) {
+      if (localeName == null) {
+        localeName = getLocaleName(locale);
+      }
+      return initializeMessages(localeName).then((_) {
+        Intl.defaultLocale = localeName;
+        return MyLocalizations();
+      });
     });
   }
 
@@ -110,4 +114,14 @@ class MyLocalizationsDelegate extends LocalizationsDelegate<MyLocalizations> {
 
   @override
   bool shouldReload(MyLocalizationsDelegate old) => false;
+}
+
+Future saveLanguage(String localeName) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("language", localeName);
+}
+
+Future<String> loadLanguage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("language");
 }
