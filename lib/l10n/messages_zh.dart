@@ -22,6 +22,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-
+    "content" : MessageLookupByLibrary.simpleMessage("内容"),
+    "localizationPage" : MessageLookupByLibrary.simpleMessage("多语言"),
+    "pluginTestPage" : MessageLookupByLibrary.simpleMessage("插件测试"),
+    "selectLanguagePage" : MessageLookupByLibrary.simpleMessage("选择语言"),
+    "title" : MessageLookupByLibrary.simpleMessage("欢迎使用"),
+    "wordListPage" : MessageLookupByLibrary.simpleMessage("单词列表")
   };
 }
