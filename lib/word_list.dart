@@ -79,8 +79,7 @@ class RandomWordsState extends State<RandomWords> {
               .divideTiles(
             context: context,
             tiles: tiles,
-          )
-              .toList();
+          ).toList();
 
           return new Scaffold(
             appBar: AppBar(

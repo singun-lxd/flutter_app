@@ -7,16 +7,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'l10n/messages_all.dart';
 
+MyLocalizationsDelegate _dynamicDelegate = const MyLocalizationsDelegate();
 Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates = [
-  const MyLocalizationsDelegate(),
+  _dynamicDelegate,
   GlobalMaterialLocalizations.delegate,
   GlobalWidgetsLocalizations.delegate,
   GlobalCupertinoLocalizations.delegate,
 ];
-Iterable<Locale> supportedLocales = [
+
+const Iterable<Locale> supportedLocales = [
   const Locale('en'), // English
   const Locale('zh'), // generic Chinese 'zh'
 ];
+
+Future reloadLanguage(String language) async {
+  if (_dynamicDelegate != null) {
+    await _dynamicDelegate.updateLanguage(language);
+  }
+}
 
 String getLocaleName(Locale locale) {
   if (locale == null) {
@@ -27,15 +35,20 @@ String getLocaleName(Locale locale) {
 }
 
 class MyLocalizations {
-  static Future<MyLocalizations> load(Locale locale) {
-    return loadLanguage().then((localeName) {
+
+  static Future<MyLocalizations> load(String localeName) {
+    return initializeMessages(localeName).then((_) {
+      Intl.defaultLocale = localeName;
+      return MyLocalizations();
+    });
+  }
+
+  static Future<MyLocalizations> startup(Locale locale) {
+    return _loadLanguage().then((localeName) {
       if (localeName == null) {
         localeName = getLocaleName(locale);
       }
-      return initializeMessages(localeName).then((_) {
-        Intl.defaultLocale = localeName;
-        return MyLocalizations();
-      });
+      return load(localeName);
     });
   }
 
@@ -109,19 +122,24 @@ class MyLocalizationsDelegate extends LocalizationsDelegate<MyLocalizations> {
     return supported;
   }
 
+  Future updateLanguage(String language) async {
+    _saveLanguage(language);
+    await MyLocalizations.load(language);
+  }
+
   @override
-  Future<MyLocalizations> load(Locale locale) => MyLocalizations.load(locale);
+  Future<MyLocalizations> load(Locale locale) => MyLocalizations.startup(locale);
 
   @override
   bool shouldReload(MyLocalizationsDelegate old) => false;
 }
 
-Future saveLanguage(String localeName) async {
+Future _saveLanguage(String localeName) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString("language", localeName);
 }
 
-Future<String> loadLanguage() async {
+Future<String> _loadLanguage() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString("language");
 }

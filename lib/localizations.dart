@@ -38,23 +38,24 @@ class LocalePageState extends State<LocalePage> {
           final Iterable<ListTile> tiles = supportedLocales.map((Locale locale) {
               String localeName = language.getLocaleName(locale);
               bool isCurrent = false;
-              if (localeName != null && localeName.compareTo(curLocale) == 0) {
+              if (curLocale != null && localeName != null && localeName.compareTo(curLocale) == 0) {
                 isCurrent = true;
               }
               return ListTile(
                 title: Text(localeName),
                 trailing: Icon(
                   isCurrent ? Icons.check : null,
+                  color: Colors.blueAccent,
                 ),
                 onTap: () {
                   if (isCurrent) {
                     return;
                   }
                   setState(() {
-                    Intl.defaultLocale = localeName;
+                    language.reloadLanguage(localeName).then((_) {
+                      Navigator.pop(context);
+                    });
                   });
-                  language.saveLanguage(localeName);
-                  Navigator.pop(context);
                 },
               );
             },
