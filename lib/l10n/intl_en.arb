@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2019-08-08T19:58:52.669146",
+  "@@last_modified": "2019-08-09T10:28:37.633038",
   "title": "Hello World",
   "@title": {
     "type": "text",
@@ -8,6 +8,26 @@
   },
   "content": "Content",
   "@content": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wordListPage": "Word List",
+  "@wordListPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pluginTestPage": "Plugin Test",
+  "@pluginTestPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "localizationPage": "Localization",
+  "@localizationPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectLanguagePage": "SelectLanguage",
+  "@selectLanguagePage": {
     "type": "text",
     "placeholders": {}
   }

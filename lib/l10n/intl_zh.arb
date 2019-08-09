@@ -1,13 +1,33 @@
 {
-  "@@locale": "zh",
-  "@@last_modified": "2019-08-08T19:58:52.669146",
-  "title": "中文",
+  "@@locale": "en",
+  "@@last_modified": "2019-08-09T10:28:37.633038",
+  "title": "欢迎使用",
   "@title": {
     "type": "text",
     "placeholders": {}
   },
-  "content": "内容",
+  "content": "Content",
   "@content": {
+    "type": "内容",
+    "placeholders": {}
+  },
+  "wordListPage": "单词列表",
+  "@wordListPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pluginTestPage": "插件测试",
+  "@pluginTestPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "localizationPage": "多语言",
+  "@localizationPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "selectLanguagePage": "选择语言",
+  "@selectLanguagePage": {
     "type": "text",
     "placeholders": {}
   }

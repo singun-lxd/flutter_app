@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(PluginApp());
-
-class PluginApp extends StatelessWidget {
+class PluginPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Battery plugin sample',
-      home: _MyHomePage(),
-    );
-  }
+  PluginPageState createState() => PluginPageState();
 }
 
-class _MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<_MyHomePage> {
+class PluginPageState extends State<PluginPage> {
   static const platform = const MethodChannel('samples.flutter.dev/battery');
 
   // Get battery level.
@@ -41,18 +29,23 @@ class _MyHomePageState extends State<_MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            RaisedButton(
-              child: Text('Get Battery Level'),
-              onPressed: _getBatteryLevel,
-            ),
-            Text(_batteryLevel),
-          ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Plugin Test'),
         ),
-      ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              RaisedButton(
+                child: Text('Get Battery Level'),
+                onPressed: _getBatteryLevel,
+              ),
+              Text(_batteryLevel),
+            ],
+          ),
+        ),
+      )
     );
   }
 }
