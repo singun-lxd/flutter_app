@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_package/flutter_package.dart';
 
 import 'localizations.dart';
 import 'plugin.dart';
@@ -51,6 +52,10 @@ class _MainPageState extends State<_MainPage> {
               child: Text(language.localizedString(context).localizationPage),
               onPressed: _showLocalizationPage,
             ),
+            RaisedButton(
+              child: Text(MaterialLocalizations.of(context).dialogLabel),
+              onPressed: _showDialog,
+            ),
           ],
         ),
       )
@@ -85,5 +90,36 @@ class _MainPageState extends State<_MainPage> {
         },
       ),
     );
+  }
+
+  void _showDialog() {
+    Calculator calculator = Calculator();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return new SimpleDialog(
+            title: new Text(MaterialLocalizations.of(context).alertDialogLabel),
+            children: <Widget>[
+              new SimpleDialogOption(
+                child: new Text(calculator.addOne(0).toString()),
+                onPressed: () {
+                  Navigator.of(context).pop("SimpleDialogOption One");
+                },
+              ),
+              new SimpleDialogOption(
+                child: new Text(calculator.addOne(1).toString()),
+                onPressed: () {
+                  Navigator.of(context).pop("SimpleDialogOption Two");
+                },
+              ),
+              new SimpleDialogOption(
+                child: new Text(calculator.addOne(2).toString()),
+                onPressed: () {
+                  Navigator.of(context).pop("SimpleDialogOption Three");
+                },
+              ),
+            ],
+          );
+        });
   }
 }
