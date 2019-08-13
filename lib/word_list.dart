@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_package/flutter_package.dart';
 
 class RandomWords extends StatefulWidget {
   @override
@@ -27,35 +29,35 @@ class RandomWordsState extends State<RandomWords> {
 
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-      trailing: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
-      },
+    return Material(child:
+      ListTile(
+        title: Text(
+          pair.asPascalCase,
+          style: _biggerFont,
+        ),
+        trailing: Icon(
+          alreadySaved ? Icons.favorite : Icons.favorite_border,
+          color: alreadySaved ? Colors.red : null,
+        ),
+        onTap: () {
+          setState(() {
+            if (alreadySaved) {
+              _saved.remove(pair);
+            } else {
+              _saved.add(pair);
+            }
+          });
+        },
+      )
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
         title: Text('Startup Name Generator'),
-        actions: <Widget>[
-          IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
-        ],
+        action: PlatformIconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
       ),
       body: _buildSuggestions(),
     );
@@ -63,32 +65,32 @@ class RandomWordsState extends State<RandomWords> {
 
   void _pushSaved() {
     Navigator.of(context).push(
-      new MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final Iterable<ListTile> tiles = _saved.map(
-                (WordPair pair) {
-              return ListTile(
+      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+        final Iterable<Widget> tiles = _saved.map(
+              (WordPair pair) {
+            return Material(child:
+              ListTile(
                 title: Text(
                   pair.asPascalCase,
                   style: _biggerFont,
                 ),
-              );
-            },
-          );
-          final List<Widget> divided = ListTile
-              .divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
+              )
+            );
+          },
+        );
+        final List<Widget> divided = ListTile
+            .divideTiles(
+          context: context,
+          tiles: tiles,
+        ).toList();
 
-          return new Scaffold(
-            appBar: AppBar(
-              title: const Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
-        },
-      ),
+        return new PlatformScaffold(
+          appBar: PlatformAppBar(
+            title: const Text('Saved Suggestions'),
+          ),
+          body: ListView(children: divided),
+        );
+      })
     );
   }
 }

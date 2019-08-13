@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_package/flutter_package.dart';
 
 import 'localizations.dart';
@@ -15,7 +16,7 @@ void main() => runApp(MainApp());
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return PlatformApp(
       onGenerateTitle: (BuildContext context) => language.localizedString(context).title,
       localizationsDelegates: language.localizationsDelegates,
       supportedLocales: language.supportedLocales,
@@ -32,27 +33,27 @@ class _MainPage extends StatefulWidget {
 class _MainPageState extends State<_MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
         title: Text(language.localizedString(context).title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
+            PlatformButton(
               child: Text(language.localizedString(context).wordListPage),
               onPressed: _showWordPage,
             ),
-            RaisedButton(
+            PlatformButton(
               child: Text(language.localizedString(context).pluginTestPage),
               onPressed: _showPluginPage,
             ),
-            RaisedButton(
+            PlatformButton(
               child: Text(language.localizedString(context).localizationPage),
               onPressed: _showLocalizationPage,
             ),
-            RaisedButton(
+            PlatformButton(
               child: Text(MaterialLocalizations.of(context).dialogLabel),
               onPressed: _showDialog,
             ),
@@ -64,60 +65,47 @@ class _MainPageState extends State<_MainPage> {
 
   void _showWordPage() {
     Navigator.of(context).push(
-      new MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return RandomWords();
-        },
-      ),
+      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+        return RandomWords();
+      })
     );
   }
 
   void _showPluginPage() {
     Navigator.of(context).push(
-      new MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return PluginPage();
-        },
-      ),
+      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+        return PluginPage();
+      })
     );
   }
 
   void _showLocalizationPage() {
     Navigator.of(context).push(
-      new MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return LocalePage(language.supportedLocales);
-        },
-      ),
+      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+        return LocalePage(language.supportedLocales);
+      })
     );
   }
 
   void _showDialog() {
-    Calculator calculator = Calculator();
     showDialog(
         context: context,
         builder: (context) {
-          return new SimpleDialog(
-            title: new Text(MaterialLocalizations.of(context).alertDialogLabel),
-            children: <Widget>[
-              new SimpleDialogOption(
-                child: new Text(calculator.addOne(0).toString()),
+          return new PlatformAlertDialog(
+            title: new Text("Dialog"),
+            content: new Text("Content"),
+            actions: <Widget>[
+              PlatformButton(
+                  onPressed: () {
+                    Navigator.pop(context, "Cancel");
+                  },
+                  child: Text(MaterialLocalizations.of(context).cancelButtonLabel)),
+              PlatformButton(
                 onPressed: () {
-                  Navigator.of(context).pop("SimpleDialogOption One");
+                  Navigator.pop(context, "OK");
                 },
-              ),
-              new SimpleDialogOption(
-                child: new Text(calculator.addOne(1).toString()),
-                onPressed: () {
-                  Navigator.of(context).pop("SimpleDialogOption Two");
-                },
-              ),
-              new SimpleDialogOption(
-                child: new Text(calculator.addOne(2).toString()),
-                onPressed: () {
-                  Navigator.of(context).pop("SimpleDialogOption Three");
-                },
-              ),
+                child: Text(MaterialLocalizations.of(context).okButtonLabel),
+              )
             ],
           );
         });

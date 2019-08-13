@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_package/flutter_package.dart';
 
 class PluginPage extends StatefulWidget {
   @override
@@ -28,24 +29,22 @@ class PluginPageState extends State<PluginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Plugin Test'),
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
+        title: Text('Plugin Test'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            PlatformButton(
+              child: Text('Get Battery Level'),
+              onPressed: _getBatteryLevel,
+            ),
+            Text(_batteryLevel),
+          ],
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              RaisedButton(
-                child: Text('Get Battery Level'),
-                onPressed: _getBatteryLevel,
-              ),
-              Text(_batteryLevel),
-            ],
-          ),
-        ),
-      )
+      ),
     );
   }
 }
