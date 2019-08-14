@@ -179,7 +179,7 @@ class CompatAppBar
 
     var trailing = trailingActions == null || trailingActions.isEmpty
         ? null
-        : new Row(
+        : Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: trailingActions,

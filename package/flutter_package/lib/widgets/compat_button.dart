@@ -186,7 +186,7 @@ class CompatButton
       this.material,
       this.materialFlat,
       this.cupertino,
-      this.materialTextTheme: ButtonTextTheme.primary})
+      this.materialTextTheme})
       : assert(materialFlat == null || material == null),
         super(key: key);
 
@@ -259,7 +259,7 @@ class CompatButton
       data = cupertino(context);
     }
 
-    return new CupertinoButton(
+    return CupertinoButton(
       key: data?.widgetKey ?? widgetKey,
       child: data?.child ?? child,
       onPressed: data?.onPressed ?? onPressed,
@@ -272,4 +272,35 @@ class CompatButton
       disabledColor: data?.disabledColor ?? disabledColor,
     );
   }
+}
+
+class CompatFlatButton extends CompatButton {
+  CompatFlatButton(
+      {Key key,
+        Key widgetKey,
+        Widget child,
+        VoidCallback onPressed,
+        Color color,
+        Color disabledColor,
+        EdgeInsetsGeometry padding,
+        materialTextTheme})
+      : super(key: key,
+          widgetKey: widgetKey,
+          child: child,
+          onPressed: onPressed,
+          color: color,
+          disabledColor: disabledColor,
+          padding: padding,
+          materialFlat: (BuildContext context) {
+            return MaterialFlatButtonData(
+              widgetKey: widgetKey,
+              child: child,
+              onPressed: onPressed,
+              color: color,
+              disabledColor: disabledColor,
+              padding: padding,
+              textTheme: materialTextTheme
+            );
+          },
+          materialTextTheme: materialTextTheme);
 }

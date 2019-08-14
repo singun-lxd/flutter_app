@@ -95,12 +95,12 @@ class _MainPageState extends State<_MainPage> {
             title: new Text("Dialog"),
             content: new Text("Content"),
             actions: <Widget>[
-              CompatButton(
+              CompatFlatButton(
                 onPressed: () {
                   Navigator.pop(context, "Cancel");
                 },
                 child: CompatText(MaterialLocalizations.of(context).cancelButtonLabel)),
-              CompatButton(
+              CompatFlatButton(
                 onPressed: () {
                   Navigator.pop(context, "OK");
                 },
