@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_package/flutter_widget_compat.dart';
@@ -46,7 +47,7 @@ class LocalePageState extends State<LocalePage> {
               ListTile(
                 title: Text(localeName),
                 trailing: Icon(
-                  isCurrent ? Icons.check : null,
+                  isCurrent ? (isMaterial ? Icons.check : CupertinoIcons.check_mark) : null,
                   color: Theme.of(context).primaryColor,
                 ),
                 onTap: () {
