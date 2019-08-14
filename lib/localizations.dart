@@ -47,7 +47,7 @@ class LocalePageState extends State<LocalePage> {
                 title: Text(localeName),
                 trailing: Icon(
                   isCurrent ? Icons.check : null,
-                  color: Colors.blueAccent,
+                  color: Theme.of(context).primaryColor,
                 ),
                 onTap: () {
                   if (isCurrent) {
