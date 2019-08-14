@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_package/flutter_package.dart';
+import 'package:flutter_package/flutter_widget_compat.dart';
 
 class PluginPage extends StatefulWidget {
   @override
@@ -29,16 +29,16 @@ class PluginPageState extends State<PluginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      appBar: PlatformAppBar(
+    return CompatScaffold(
+      appBar: CompatAppBar(
         title: Text('Plugin Test'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            PlatformButton(
-              child: Text('Get Battery Level'),
+            CompatButton(
+              child: CompatText('Get Battery Level'),
               onPressed: _getBatteryLevel,
             ),
             Text(_batteryLevel),

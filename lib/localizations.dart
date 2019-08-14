@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_package/flutter_package.dart';
+import 'package:flutter_package/flutter_widget_compat.dart';
 import 'package:intl/intl.dart';
 
 import 'language.dart' as language;
@@ -19,10 +19,12 @@ class LocalePageState extends State<LocalePage> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      appBar: PlatformAppBar(
+    return CompatScaffold(
+      appBar: CompatAppBar(
         title: Text(language.localizedString(context).localizationPage),
-        action: PlatformIconButton(icon: const Icon(Icons.language), onPressed: _changeLanguage),
+        trailingActions: [
+          CompatIconButton(icon: const Icon(Icons.language), onPressed: _changeLanguage),
+        ],
       ),
       body: Center(
         child: Text(language.localizedString(context).content),
@@ -32,7 +34,7 @@ class LocalePageState extends State<LocalePage> {
 
   void _changeLanguage() {
     Navigator.of(context).push(
-      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+      compatPageRoute<void>(builder: (BuildContext context) {
         String curLocale = Intl.defaultLocale;
         final Iterable<Widget> tiles = supportedLocales.map((Locale locale) {
           String localeName = language.getLocaleName(locale);
@@ -67,8 +69,8 @@ class LocalePageState extends State<LocalePage> {
           tiles: tiles,
         ).toList();
 
-        return new PlatformScaffold(
-          appBar: PlatformAppBar(
+        return new CompatScaffold(
+          appBar: CompatAppBar(
             title: Text(language.localizedString(context).selectLanguagePage),
           ),
           body: ListView(children: divided),

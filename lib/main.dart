@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_package/flutter_package.dart';
+import 'package:flutter_package/flutter_widget_compat.dart';
 
 import 'localizations.dart';
 import 'plugin.dart';
@@ -16,7 +16,7 @@ void main() => runApp(MainApp());
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return PlatformApp(
+    return CompatApp(
       onGenerateTitle: (BuildContext context) => language.localizedString(context).title,
       localizationsDelegates: language.localizationsDelegates,
       supportedLocales: language.supportedLocales,
@@ -33,27 +33,27 @@ class _MainPage extends StatefulWidget {
 class _MainPageState extends State<_MainPage> {
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      appBar: PlatformAppBar(
+    return CompatScaffold(
+      appBar: CompatAppBar(
         title: Text(language.localizedString(context).title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PlatformButton(
+            CompatButton(
               child: Text(language.localizedString(context).wordListPage),
               onPressed: _showWordPage,
             ),
-            PlatformButton(
+            CompatButton(
               child: Text(language.localizedString(context).pluginTestPage),
               onPressed: _showPluginPage,
             ),
-            PlatformButton(
+            CompatButton(
               child: Text(language.localizedString(context).localizationPage),
               onPressed: _showLocalizationPage,
             ),
-            PlatformButton(
+            CompatButton(
               child: Text(MaterialLocalizations.of(context).dialogLabel),
               onPressed: _showDialog,
             ),
@@ -65,7 +65,7 @@ class _MainPageState extends State<_MainPage> {
 
   void _showWordPage() {
     Navigator.of(context).push(
-      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+      compatPageRoute<void>(builder: (BuildContext context) {
         return RandomWords();
       })
     );
@@ -73,7 +73,7 @@ class _MainPageState extends State<_MainPage> {
 
   void _showPluginPage() {
     Navigator.of(context).push(
-      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+        compatPageRoute<void>(builder: (BuildContext context) {
         return PluginPage();
       })
     );
@@ -81,30 +81,30 @@ class _MainPageState extends State<_MainPage> {
 
   void _showLocalizationPage() {
     Navigator.of(context).push(
-      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+        compatPageRoute<void>(builder: (BuildContext context) {
         return LocalePage(language.supportedLocales);
       })
     );
   }
 
   void _showDialog() {
-    showDialog(
+    showCompatDialog(
         context: context,
         builder: (context) {
-          return new PlatformAlertDialog(
+          return new CompatAlertDialog(
             title: new Text("Dialog"),
             content: new Text("Content"),
             actions: <Widget>[
-              PlatformButton(
-                  onPressed: () {
-                    Navigator.pop(context, "Cancel");
-                  },
-                  child: Text(MaterialLocalizations.of(context).cancelButtonLabel)),
-              PlatformButton(
+              CompatButton(
+                onPressed: () {
+                  Navigator.pop(context, "Cancel");
+                },
+                child: CompatText(MaterialLocalizations.of(context).cancelButtonLabel)),
+              CompatButton(
                 onPressed: () {
                   Navigator.pop(context, "OK");
                 },
-                child: Text(MaterialLocalizations.of(context).okButtonLabel),
+                child: CompatText(MaterialLocalizations.of(context).okButtonLabel),
               )
             ],
           );

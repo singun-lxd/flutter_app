@@ -1,7 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_package/flutter_package.dart';
+import 'package:flutter_package/flutter_widget_compat.dart';
 
 class RandomWords extends StatefulWidget {
   @override
@@ -54,10 +54,12 @@ class RandomWordsState extends State<RandomWords> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
-      appBar: PlatformAppBar(
+    return CompatScaffold(
+      appBar: CompatAppBar(
         title: Text('Startup Name Generator'),
-        action: PlatformIconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
+        trailingActions: [
+          CompatIconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
+        ],
       ),
       body: _buildSuggestions(),
     );
@@ -65,7 +67,7 @@ class RandomWordsState extends State<RandomWords> {
 
   void _pushSaved() {
     Navigator.of(context).push(
-      PlatformPageRoute.createVoidRoute(builder: (BuildContext context) {
+      compatPageRoute<void>(builder: (BuildContext context) {
         final Iterable<Widget> tiles = _saved.map(
               (WordPair pair) {
             return Material(child:
@@ -84,8 +86,8 @@ class RandomWordsState extends State<RandomWords> {
           tiles: tiles,
         ).toList();
 
-        return new PlatformScaffold(
-          appBar: PlatformAppBar(
+        return new CompatScaffold(
+          appBar:  CompatAppBar(
             title: const Text('Saved Suggestions'),
           ),
           body: ListView(children: divided),

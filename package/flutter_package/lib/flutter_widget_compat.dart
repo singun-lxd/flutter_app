@@ -1,0 +1,20 @@
+library flutter_widget_compat;
+
+export 'base/compat.dart';
+export 'package:flutter_package/base/utils.dart';
+export 'widgets/compat_alert_dialog.dart';
+export 'widgets/compat_app.dart';
+export 'widgets/compat_app_bar.dart';
+export 'widgets/compat_button.dart';
+export 'widgets/compat_circluar_progress_indicator.dart';
+export 'widgets/compat_dialog_action.dart';
+export 'widgets/compat_icon_button.dart';
+export 'widgets/compat_nav_bar.dart';
+export 'widgets/compat_scaffold.dart';
+export 'widgets/compat_slider.dart';
+export 'widgets/compat_switch.dart';
+export 'widgets/compat_text.dart';
+export 'widgets/compat_text_field.dart';
+export 'widgets/compat_widget.dart';
+export 'widgets/support_widget.dart';
+export 'widgets/widget_base.dart';
