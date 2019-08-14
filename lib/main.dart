@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_package/flutter_widget_compat.dart';
@@ -16,11 +17,31 @@ void main() => runApp(MainApp());
 class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CompatApp(
-      onGenerateTitle: (BuildContext context) => language.localizedString(context).title,
-      localizationsDelegates: language.localizationsDelegates,
-      supportedLocales: language.supportedLocales,
-      home: _MainPage(),
+    return AppWidget();
+  }
+}
+
+class AppWidget extends StatefulWidget {
+  @override
+  _AppWidgetState createState() => _AppWidgetState();
+}
+
+class _AppWidgetState extends State<AppWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return CompatSupportWidget(
+      builder: (BuildContext context) => CompatApp(
+        onGenerateTitle: (BuildContext context) => language.localizedString(context).title,
+        localizationsDelegates: language.localizationsDelegates,
+        supportedLocales: language.supportedLocales,
+        material: (_) => MaterialAppData(theme: ThemeData(
+          primarySwatch: Colors.green,
+        )),
+        cupertino: (_) => CupertinoAppData(theme: CupertinoThemeData(
+          primaryColor: Colors.green,
+        )),
+        home: _MainPage(),
+      ),
     );
   }
 }
@@ -36,6 +57,13 @@ class _MainPageState extends State<_MainPage> {
     return CompatScaffold(
       appBar: CompatAppBar(
         title: Text(language.localizedString(context).title),
+        trailingActions: <Widget>[
+          CompatIconButton(
+            materialIcon: Icon(Icons.settings),
+            cupertinoIcon: Icon(CupertinoIcons.settings),
+            onPressed: () { _switchPlatform(context);}
+          )
+        ],
       ),
       body: Center(
         child: Column(
@@ -61,6 +89,14 @@ class _MainPageState extends State<_MainPage> {
         ),
       )
     );
+  }
+
+  void _switchPlatform(BuildContext context) {
+    if (isMaterial) {
+      CompatSupportWidget.of(context).setCompatMode(CompatMode.Cupertino);
+    } else {
+      CompatSupportWidget.of(context).setCompatMode(CompatMode.Material);
+    }
   }
 
   void _showWordPage() {
