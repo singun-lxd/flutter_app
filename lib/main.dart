@@ -35,10 +35,10 @@ class _AppWidgetState extends State<AppWidget> {
         localizationsDelegates: language.localizationsDelegates,
         supportedLocales: language.supportedLocales,
         material: (_) => MaterialAppData(theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.pink,
         )),
         cupertino: (_) => CupertinoAppData(theme: CupertinoThemeData(
-          primaryColor: Colors.green,
+          primaryColor: Colors.pink,
         )),
         home: _MainPage(),
       ),
