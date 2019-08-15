@@ -1,7 +1,7 @@
 library flutter_widget_compat;
 
 export 'base/compat.dart';
-export 'package:flutter_package/base/utils.dart';
+export 'base/utils.dart';
 export 'widgets/compat_alert_dialog.dart';
 export 'widgets/compat_app.dart';
 export 'widgets/compat_app_bar.dart';

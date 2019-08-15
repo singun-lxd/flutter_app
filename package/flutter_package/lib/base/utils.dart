@@ -9,16 +9,16 @@ Future<T> showCompatDialog<T>({
   @required WidgetBuilder builder,
   materialBarrierDismissible = false,
 }) {
-  if (isMaterial) {
-    return showDialog<T>(
-        context: context,
-        builder: builder,
-        barrierDismissible: materialBarrierDismissible);
-  } else {
+  if (isCupertino) {
     return showCupertinoDialog<T>(
       context: context,
       builder: builder,
     );
+  } else {
+    return showDialog<T>(
+        context: context,
+        builder: builder,
+        barrierDismissible: materialBarrierDismissible);
   }
 }
 
@@ -29,14 +29,7 @@ PageRoute<T> compatPageRoute<T>({
   bool fullscreenDialog = false,
   String cupertinoTitle,
 }) {
-  if (isMaterial) {
-    return MaterialPageRoute<T>(
-      builder: builder,
-      settings: settings,
-      maintainState: maintainState,
-      fullscreenDialog: fullscreenDialog,
-    );
-  } else {
+  if (isCupertino) {
     return CupertinoPageRoute<T>(
       builder: builder,
       settings: settings,
@@ -44,5 +37,20 @@ PageRoute<T> compatPageRoute<T>({
       fullscreenDialog: fullscreenDialog,
       title: cupertinoTitle,
     );
+  } else {
+    return MaterialPageRoute<T>(
+      builder: builder,
+      settings: settings,
+      maintainState: maintainState,
+      fullscreenDialog: fullscreenDialog,
+    );
+  }
+}
+
+Color compatThemePrimaryColor(BuildContext context) {
+  if (isCupertino) {
+    return CupertinoTheme.of(context).primaryColor;
+  } else {
+    return Theme.of(context).primaryColor;
   }
 }
